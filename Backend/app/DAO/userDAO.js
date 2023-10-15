@@ -8,9 +8,28 @@ import uniqueValidator from "mongoose-unique-validator";
 const userRole = {
   admin: "admin",
   user: "user",
+  trainer: "trainer",
 };
 
-const userRoles = [userRole.admin, userRole.user];
+const trainerType = {
+  functional: "functional",
+  reducing: "reducing",
+  strengthening: "strengthening",
+  generalDevelopment: "generalDevelopment",
+  forWomenDuringAndAfterPregnancy: "forWomenDuringAndAfterPregnancy",
+  relaxingTheSenses: "relaxingTheSenses",
+};
+
+const userRoles = [userRole.admin, userRole.user, userRole.trainer];
+
+const trainerTypes = [
+  trainerType.functional,
+  trainerType.reducing,
+  trainerType.strengthening,
+  trainerType.generalDevelopment,
+  trainerType.forWomenDuringAndAfterPregnancy,
+  trainerType.relaxingTheSenses,
+];
 
 const userSchema = new mongoose.Schema(
   {
@@ -19,7 +38,12 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: userRoles,
-      default: userRole.admin,
+      default: userRole.user,
+      required: false,
+    },
+    trainerType: {
+      type: String,
+      enum: trainerTypes,
       required: false,
     },
     active: { type: Boolean, default: true, required: false },
