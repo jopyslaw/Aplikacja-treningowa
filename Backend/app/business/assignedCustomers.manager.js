@@ -1,29 +1,29 @@
 import assignedCustomersDAO from "../DAO/assignedCustomersDAO";
-import applicationException from "../service/applicationException";
-import sha1 from "sha1";
 
 const create = (context) => {
-  const createNewOrUpdate = async (userData) => {
-    const user = await assignedCustomersDAO.createNewOrUpdate(userData);
+  const createNewOrUpdate = async (assignedCustomerData) => {
+    const assignedCustomer = await assignedCustomersDAO.createNewOrUpdate(
+      assignedCustomerData
+    );
 
-    if (user) {
-      return result;
+    if (assignedCustomer) {
+      return assignedCustomer;
     }
   };
 
   const getByUserId = async (id) => {
-    const user = await assignedCustomersDAO.getByUserId(id);
+    const assignedCustomer = await assignedCustomersDAO.getByUserId(id);
 
-    if (user) {
-      return user;
+    if (assignedCustomer) {
+      return assignedCustomer;
     }
   };
 
   const getByTrainerId = async (id) => {
-    const user = await assignedCustomersDAO.getByTrainerId(id);
+    const assignedCustomer = await assignedCustomersDAO.getByTrainerId(id);
 
-    if (user) {
-      return user;
+    if (assignedCustomer) {
+      return assignedCustomer;
     }
   };
 

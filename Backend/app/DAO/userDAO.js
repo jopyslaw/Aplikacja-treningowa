@@ -35,6 +35,8 @@ const userSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true, unique: true },
+    surname: { type: String, required: true, unique: true },
+    login: { type: String, required: true, unique: true },
     role: {
       type: String,
       enum: userRoles,

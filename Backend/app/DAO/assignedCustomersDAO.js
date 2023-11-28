@@ -19,6 +19,9 @@ const assignedCustomersSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    startDate: { type: String, required: true },
+    endDate: { type: String, required: true },
+    isActive: { type: Boolean, required: true, default: true },
   },
   {
     collection: "assignedCustomers",
