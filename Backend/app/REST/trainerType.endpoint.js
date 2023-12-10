@@ -2,22 +2,11 @@ import businessContainer from "../business/business.container";
 import applicationException from "../service/applicationException";
 import auth from "../middleware/auth";
 
-const userEndpoint = (router) => {
-  router.post("/api/user/auth", async (request, response, next) => {
-    try {
-      let result = await businessContainer
-        .getUserManager(request)
-        .authenticate(request.body.login, request.body.password);
-      response.status(200).send(result);
-    } catch (error) {
-      applicationException.errorHandler(error, response);
-    }
-  });
-
-  router.post("/api/user/create", async (request, response, next) => {
+const trainerTypeEndpoint = (router) => {
+  router.post("/api/trainerType/create", async (request, response, next) => {
     try {
       const result = await businessContainer
-        .getUserManager(request)
+        .getTrainerTypeManager(request)
         .createNewOrUpdate(request.body);
       response.status(200).send(result);
     } catch (error) {
@@ -25,14 +14,25 @@ const userEndpoint = (router) => {
     }
   });
 
+  router.get("/api/trainerType/get/:id", async (request, response, next) => {
+    try {
+      const result = await businessContainer
+        .getTrainerTypeManager()
+        .getByTrainerTypeId(request.params.id);
+      response.status(200).send(result);
+    } catch (error) {
+      applicationException.errorHandler(error, response);
+    }
+  });
+
   router.delete(
-    "/api/user/logout/:userId",
+    "/api/trainerType/remove/:userId",
     auth,
     async (request, response, next) => {
       try {
         let result = await businessContainer
-          .getUserManager(request)
-          .removeHashSession(request.body.userId);
+          .getTrainerTypeManager(request)
+          .removeById(request.params.userId);
         response.status(200).send(result);
       } catch (error) {
         applicationException.errorHandler(error, response);
@@ -41,4 +41,4 @@ const userEndpoint = (router) => {
   );
 };
 
-export default userEndpoint;
+export default trainerTypeEndpoint;
