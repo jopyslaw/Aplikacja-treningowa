@@ -2,10 +2,10 @@ import trainerTypeDAO from "../DAO/trainerTypeDAO";
 
 const create = (context) => {
   const createNewOrUpdate = async (trainerType) => {
-    const trainerType = await trainerTypeDAO.createNewOrUpdate(trainerType);
+    const trainerTypeData = await trainerTypeDAO.createNewOrUpdate(trainerType);
 
-    if (trainerType) {
-      return trainerType;
+    if (trainerTypeData) {
+      return trainerTypeData;
     }
   };
 
