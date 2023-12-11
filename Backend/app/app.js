@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import routes from "./REST/routes";
+import { addData } from "./services/addNewData";
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -27,6 +28,7 @@ mongoose.connect(
       console.error(error);
     } else {
       console.info("Connect with database estabilished");
+      addData();
     }
   }
 );

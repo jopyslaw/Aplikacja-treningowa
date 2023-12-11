@@ -21,10 +21,26 @@ const create = (context) => {
     return await exerciseDAO.findByIdAndRemove(id);
   };
 
+  const createExercisesFromArray = async (exercisesArray) => {
+    const result = await exerciseDAO.creatExcersiseFromArray(exercisesArray);
+    if (result) {
+      return result;
+    }
+  };
+
+  const getAllExercises = async () => {
+    const result = await exerciseDAO.getAllExercises();
+    if (result) {
+      return result;
+    }
+  };
+
   return {
     createNewOrUpdate: createNewOrUpdate,
     getByExecersiseId,
     removeById,
+    createExercisesFromArray,
+    getAllExercises,
   };
 };
 

@@ -38,9 +38,8 @@ const trainingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "trainerType",
       required: true,
-      unique: true,
     },
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     sex: { type: String, enum: sexTypes, required: true },
     trainingGoal: { type: String, required: true },
@@ -51,7 +50,6 @@ const trainingSchema = new mongoose.Schema(
     },
     workType: { type: String, enum: workTypes, required: true },
     excercises: [],
-    excludedExcersises: [],
   },
   {
     collection: "training",
@@ -59,6 +57,11 @@ const trainingSchema = new mongoose.Schema(
 );
 
 const TrainingModel = mongoose.model("training", trainingSchema);
+
+const createTraningFromArray = async (trainingArray) => {
+  const result = await TrainingModel.insertMany(trainingArray);
+  return result;
+};
 
 const createNewOrUpdate = (training) => {
   return Promise.resolve()
@@ -91,6 +94,13 @@ const createNewOrUpdate = (training) => {
     });
 };
 
+const getAllTrainings = async () => {
+  const result = await TrainingModel.find({});
+  if (result) {
+    return result;
+  }
+};
+
 const getByTrainingId = async (id) => {
   const result = await TrainingModel.findOne({ _id: id });
   if (result) {
@@ -110,6 +120,12 @@ export default {
   createNewOrUpdate: createNewOrUpdate,
   getByTrainingId,
   removeById: removeById,
+  createTraningFromArray,
+  getAllTrainings,
 
   model: TrainingModel,
+
+  sexType,
+  workType,
+  physcialActivityType,
 };
