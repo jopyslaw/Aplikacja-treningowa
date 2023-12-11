@@ -1,6 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 function Navbar() {
+  const nav = useNavigate();
+  const name = localStorage.getItem("token")
+    ? jwtDecode(localStorage.getItem("token")).name
+    : "";
   return (
     <div className="w-full pt-5 flex justify-center bg-transparent">
       <div className="w-full px-20">
@@ -20,15 +25,31 @@ function Navbar() {
             </NavLink>
           </div>
           <div className="font-bold flex justify-end gap-5 flex-row w-full">
-            <NavLink to="/login" className="font-bold text-[25px] text-white">
-              Zaloguj się
-            </NavLink>
-            <NavLink
-              to="/register"
-              className="font-bold text-[25px] text-white"
-            >
-              Załóż konto
-            </NavLink>
+            {localStorage.getItem("token") ? (
+              <p className="font-bold text-[25px] text-white">Witaj {name}</p>
+            ) : (
+              <NavLink to="/login" className="font-bold text-[25px] text-white">
+                Zaloguj się
+              </NavLink>
+            )}
+            {localStorage.getItem("token") ? (
+              <p
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  nav("/");
+                }}
+                className="cursor-pointer font-bold text-[25px] text-white"
+              >
+                Wyloguj się
+              </p>
+            ) : (
+              <NavLink
+                to="/register"
+                className="font-bold text-[25px] text-white"
+              >
+                Zarejestruj się
+              </NavLink>
+            )}
           </div>
         </div>
       </div>
