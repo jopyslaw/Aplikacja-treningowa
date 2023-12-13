@@ -25,6 +25,17 @@ const trainerTypeEndpoint = (router) => {
     }
   });
 
+  router.get("/api/trainerType/get", async (request, response, next) => {
+    try {
+      const result = await businessContainer
+        .getTrainerTypeManager()
+        .getAllTrainersType();
+      response.status(200).send(result);
+    } catch (error) {
+      applicationException.errorHandler(error, response);
+    }
+  });
+
   router.delete(
     "/api/trainerType/remove/:userId",
     auth,
