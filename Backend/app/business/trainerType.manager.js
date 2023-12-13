@@ -21,10 +21,28 @@ const create = (context) => {
     return await trainerTypeDAO.findByIdAndRemove(id);
   };
 
+  const createTrainerTypeFromArray = async (trainierTypeArray) => {
+    const result = await trainerTypeDAO.createTrainerTypeArray(
+      trainierTypeArray
+    );
+    if (result) {
+      return result;
+    }
+  };
+
+  const getAllTrainersType = async () => {
+    const result = await trainerTypeDAO.getAllTrainerTypes();
+    if (result) {
+      return result;
+    }
+  };
+
   return {
     createNewOrUpdate: createNewOrUpdate,
     getByTrainerTypeId,
     removeById,
+    getAllTrainersType,
+    createTrainerTypeFromArray,
   };
 };
 

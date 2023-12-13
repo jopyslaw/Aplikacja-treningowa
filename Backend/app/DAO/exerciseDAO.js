@@ -6,7 +6,7 @@ import mongoConverter from "../service/mongoConverter";
 
 const exerciseSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     numberOfRepetitions: { type: Number, required: true },
   },
@@ -16,6 +16,11 @@ const exerciseSchema = new mongoose.Schema(
 );
 
 const ExerciseModel = mongoose.model("exercise", exerciseSchema);
+
+const creatExcersiseFromArray = async (exerciseArray) => {
+  const result = await ExerciseModel.insertMany(exerciseArray);
+  return result;
+};
 
 const createNewOrUpdate = (exercise) => {
   return Promise.resolve()
@@ -59,6 +64,13 @@ const getByExerciseId = async (id) => {
   );
 };
 
+const getAllExercises = async () => {
+  const result = await ExerciseModel.find({});
+  if (result) {
+    return result;
+  }
+};
+
 const removeById = async (id) => {
   return await ExerciseModel.findByIdAndRemove(id);
 };
@@ -67,6 +79,8 @@ export default {
   createNewOrUpdate: createNewOrUpdate,
   getByExerciseId,
   removeById: removeById,
+  creatExcersiseFromArray,
+  getAllExercises,
 
   model: ExerciseModel,
 };

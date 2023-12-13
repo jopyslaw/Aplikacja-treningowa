@@ -26,10 +26,9 @@ const trainerTypeSchema = new mongoose.Schema(
   {
     trainerType: {
       type: String,
-      enum: trainerTypes,
       required: false,
+      unique: true,
     },
-    trenings: [],
   },
   {
     collection: "trainerType",
@@ -37,6 +36,13 @@ const trainerTypeSchema = new mongoose.Schema(
 );
 
 const TrainerTypeModel = mongoose.model("trainerType", trainerTypeSchema);
+
+const createTrainerTypeArray = async (trainerTypeArray) => {
+  const result = await TrainerTypeModel.insertMany(trainerTypeArray);
+  if (result) {
+    return result;
+  }
+};
 
 const createNewOrUpdate = (trainerType) => {
   return Promise.resolve()
@@ -80,6 +86,13 @@ const getByTrainerTypeId = async (id) => {
   );
 };
 
+const getAllTrainerTypes = async () => {
+  const result = await TrainerTypeModel.find({});
+  if (result) {
+    return result;
+  }
+};
+
 const removeById = async (id) => {
   return await TrainerTypeModel.findByIdAndRemove(id);
 };
@@ -88,6 +101,9 @@ export default {
   createNewOrUpdate: createNewOrUpdate,
   getByTrainerTypeId,
   removeById: removeById,
+  createTrainerTypeArray,
+  getAllTrainerTypes,
 
   model: TrainerTypeModel,
+  trainerType,
 };
