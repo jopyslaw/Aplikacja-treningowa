@@ -3,7 +3,6 @@ import * as _ from "lodash";
 import Promise from "bluebird";
 import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
-import uniqueValidator from "mongoose-unique-validator";
 
 const userRole = {
   admin: "admin",
@@ -34,8 +33,8 @@ const trainerTypes = [
 const userSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
-    name: { type: String, required: true, unique: true },
-    surname: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
     login: { type: String, required: true, unique: true },
     role: {
       type: String,
@@ -44,8 +43,8 @@ const userSchema = new mongoose.Schema(
       required: false,
     },
     trainerType: {
-      type: String,
-      enum: trainerTypes,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "trainerType",
       required: false,
     },
     active: { type: Boolean, default: true, required: false },
@@ -55,8 +54,6 @@ const userSchema = new mongoose.Schema(
     collection: "user",
   }
 );
-
-userSchema.plugin(uniqueValidator);
 
 const UserModel = mongoose.model("user", userSchema);
 
