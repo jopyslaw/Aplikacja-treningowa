@@ -9,6 +9,7 @@ module.exports = {
         image2: "url('./Images/TrainCalculator.jpg')",
         woman: "url('./Images/woman.png')",
         man: "url('./Images/man.png')",
+        user: "url('./Images/user.png')",
       }),
     },
   },

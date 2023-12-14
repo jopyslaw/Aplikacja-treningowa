@@ -33,15 +33,9 @@ function Navbar() {
               </NavLink>
             )}
             {localStorage.getItem("token") ? (
-              <p
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  nav("/");
-                }}
-                className="cursor-pointer font-bold text-[25px] text-white"
-              >
-                Wyloguj się
-              </p>
+              <div className="flex justify-center items-center">
+                <div className="bg-user bg-cover bg-no-repeat w-[30px] h-[30px]" />
+              </div>
             ) : (
               <NavLink
                 to="/register"
