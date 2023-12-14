@@ -14,7 +14,19 @@ function Register() {
     role: "",
     trainerType: "",
   });
+  const [trainerType, setTrainerType] = useState([]);
   const nav = useNavigate();
+
+  useEffect(() => {
+    axios.get("http://localhost:4200/api/trainerType/get").then((response) => {
+      setTrainerType(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(trainerType, "trainer-type");
+    console.log(formData, "form-data");
+  }, [formData]);
 
   const handleSubmnit = () => {
     axios
@@ -47,7 +59,7 @@ function Register() {
                     }
                     className="rounded-lg"
                   >
-                    <option value="mentee">Podopieczny</option>
+                    <option value="user">Podopieczny</option>
                     <option value="trainer">Trener</option>
                   </select>
                 </div>
@@ -64,13 +76,11 @@ function Register() {
                       }
                       className="rounded-lg"
                     >
-                      <option value="functional">Funkcjonalny</option>
-                      <option value="reducing">Redukcyjny</option>
-                      <option value="strengthening">Wzmacniający</option>
-                      <option value="forWomenDuringAndAfterPregnancy">
-                        Dla kobiet po i w trakcie ciąży
-                      </option>
-                      <option value="relaxingTheSenses">Relaksujący</option>
+                      {trainerType.map((value, index) => (
+                        <option key={index} value={value._id}>
+                          {value.trainerType}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 )}

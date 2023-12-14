@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import Promise from "bluebird";
 import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
+import e from "express";
 
 const userRole = {
   admin: "admin",
@@ -73,6 +74,7 @@ const createNewOrUpdate = (user) => {
       }
     })
     .catch((error) => {
+      console.log(error)
       if ("ValidationError" === error.name) {
         error = error.errors[Object.keys(error.errors)[0]];
         throw applicationException.new(
