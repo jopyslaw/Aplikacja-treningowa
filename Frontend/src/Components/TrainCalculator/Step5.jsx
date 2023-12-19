@@ -4,6 +4,9 @@ function Step5(props) {
   useEffect(() => {
     console.log(props.data);
   }, [props.data]);
+  const updateStep = (currentStep) => {
+    props.onUpdate(currentStep);
+  };
   return (
     <>
       <div className="mt-[80px] justify-center flex w-full">
@@ -60,7 +63,13 @@ function Step5(props) {
                       ? "Przytyć"
                       : props.data.goal === "lose"
                       ? "Schudnąć"
-                      : "Utrzymać masę ciała"}
+                      : props.data.goal === "injury"
+                      ? "Powrót po kontuzji"
+                      : props.data.goal === "stability"
+                      ? "Generalny rozwój"
+                      : props.data.goal === "moveForPregnancy"
+                      ? "Dla kobiet w trakcie i po ciąży"
+                      : "Relaksujący"}
                   </p>
                 </div>
               </div>
@@ -77,7 +86,10 @@ function Step5(props) {
                 </div>
               </div>
             </div>
-            <button className="px-5 bg-white rounded-full">
+            <button
+              onClick={() => updateStep(6)}
+              className="px-5 bg-white rounded-full"
+            >
               Dobierz trening przy użyciu systemu SmartTrain!
             </button>
           </div>

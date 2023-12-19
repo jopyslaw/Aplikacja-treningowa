@@ -4,9 +4,11 @@ import UserData from "./UserData";
 import Footer from "../Footer";
 import UserExampleExercises from "./UserExampleExercises";
 import UserHistory from "./UserHistory";
+import { useNavigate } from "react-router-dom";
 
 function UserPanel() {
   const [activeItem, setActiveItem] = useState("user-data");
+  const nav = useNavigate();
   return (
     <>
       <div className="pb-10 bg-gradient-to-b w-full flex-col flex from-indigo-500 to-purple-400 ...">
@@ -18,6 +20,17 @@ function UserPanel() {
             </p>
             <div className="mt-[40px]">
               <p className="font-bold text-4xl">Witaj w panelu klienta!</p>
+            </div>
+            <div className="mt-10 flex justify-center w-full">
+              <button
+                className="bg-gray-600 bg-opacity-30 px-5 text-white font-bold border-2 border-black"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  nav("/");
+                }}
+              >
+                Wyloguj się
+              </button>
             </div>
             <div className="flex w-3/4 bg-purple-100 bg-opacity-50 rounded-lg flex-row  mt-[40px]">
               <button

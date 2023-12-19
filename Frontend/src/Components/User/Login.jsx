@@ -14,8 +14,8 @@ function Login() {
     axios
       .post("http://localhost:4200/api/user/auth", formData)
       .then((response) => {
-        console.log("Odpowiedź serwera:", response.data);
-        localStorage.setItem("token", JSON.stringify(response.data));
+        console.log("Odpowiedź serwera:", response.data.token);
+        localStorage.setItem("token", response.data.token);
         nav("/");
       })
       .catch((error) => {
