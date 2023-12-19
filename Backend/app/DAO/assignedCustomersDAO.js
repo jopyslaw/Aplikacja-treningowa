@@ -95,12 +95,30 @@ const suspendCooperation = async (id) => {
   return await AssignedCustomersModel.findByIdAndUpdate(id, { archived: true });
 };
 
+const getAssignedCustomersToTrainer = async (id) => {
+  return await AssignedCustomersModel.find(
+    { trainerId: _id },
+    {},
+    { lean: "toObject" }
+  );
+};
+
+const getAssignedTrainersToUser = async (id) => {
+  return await AssignedCustomersModel.find(
+    { userId: _id },
+    {},
+    { lean: "toObject" }
+  );
+};
+
 export default {
   createNewOrUpdate: createNewOrUpdate,
   getByUserId,
   getByTrainerId,
   removeById: removeById,
   suspendCooperation,
+  getAssignedCustomersToTrainer,
+  getAssignedTrainersToUser,
 
   model: AssignedCustomersModel,
 };
