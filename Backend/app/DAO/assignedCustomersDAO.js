@@ -97,7 +97,7 @@ const suspendCooperation = async (id) => {
 
 const getAssignedCustomersToTrainer = async (id) => {
   return await AssignedCustomersModel.find(
-    { trainerId: _id },
+    { trainerId: id },
     {},
     { lean: "toObject" }
   );
@@ -105,7 +105,7 @@ const getAssignedCustomersToTrainer = async (id) => {
 
 const getAssignedTrainersToUser = async (id) => {
   return await AssignedCustomersModel.find(
-    { userId: _id },
+    { userId: id },
     {},
     { lean: "toObject" }
   );
