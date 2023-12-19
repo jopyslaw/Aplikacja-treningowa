@@ -63,7 +63,7 @@ const userEndpoint = (router) => {
       try {
         const result = await businessContainer
           .getUserManager(request)
-          .getTrainersByTrainerType(request.queryParams.goal);
+          .getTrainersByTrainerType(request.query.goal);
         response.status(200).send(result);
       } catch (error) {
         applicationException.errorHandler(error, response);
