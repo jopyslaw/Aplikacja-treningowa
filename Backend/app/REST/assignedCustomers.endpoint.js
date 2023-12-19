@@ -45,6 +45,36 @@ const assignedCustomersEndpoint = (router) => {
       }
     }
   );
+
+  router.get(
+    "/api/assignedCustomers/users/:trainerId",
+    auth,
+    async (request, response, next) => {
+      try {
+        const result = await businessContainer
+          .getAssignedCustomersManager()
+          .getAssignedUsersForTrainer(request.params.trainerId);
+        response.status(200).send(result);
+      } catch (error) {
+        applicationException.errorHandler(error, response);
+      }
+    }
+  );
+
+  router.get(
+    "/api/assignedCustomers/trainers/:userId",
+    auth,
+    async (request, response, next) => {
+      try {
+        const result = await businessContainer
+          .getAssignedCustomersManager()
+          .getAssignedTrainersForUser(request.params.userId);
+        response.status(200).send(result);
+      } catch (error) {
+        applicationException.errorHandler(error, response);
+      }
+    }
+  );
 };
 
 export default assignedCustomersEndpoint;
