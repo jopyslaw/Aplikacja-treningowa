@@ -57,13 +57,13 @@ const userEndpoint = (router) => {
   );
 
   router.get(
-    "/api/user/get-trainers-by-trainer-type/:trainerType",
+    "/api/user/get-trainers-by-trainer-type",
     auth,
     async (request, response, next) => {
       try {
         const result = await businessContainer
           .getUserManager(request)
-          .getTrainersByTrainerType(request.params.trainerType);
+          .getTrainersByTrainerType(request.queryParams.goal);
         response.status(200).send(result);
       } catch (error) {
         applicationException.errorHandler(error, response);
