@@ -17,6 +17,20 @@ const assignedCustomersEndpoint = (router) => {
     }
   );
 
+  router.put(
+    "/api/assignedCustomers/suspend",
+    async (request, response, next) => {
+      try {
+        const result = await businessContainer
+          .getAssignedCustomersManager(request)
+          .suspendCooperation(request.body.id);
+        response.status(200).send(result);
+      } catch (error) {
+        applicationException.errorHandler(error, response);
+      }
+    }
+  );
+
   router.delete(
     "/api/assignedCustomers/remove/:userId",
     auth,

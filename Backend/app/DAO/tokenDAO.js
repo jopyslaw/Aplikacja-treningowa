@@ -37,6 +37,9 @@ const create = async (user) => {
     email: user.email,
     role: user.role,
     isAdmin: user.isAdmin,
+    trainerType: user.trainerType,
+    login: user.login,
+    surname: user.surname,
     access: access,
   };
   const value = jwt.sign(userData, config.JwtSecret, {

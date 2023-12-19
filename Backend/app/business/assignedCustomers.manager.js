@@ -28,7 +28,11 @@ const create = (context) => {
   };
 
   const removeById = async (id) => {
-    return await assignedCustomersDAO.findByIdAndRemove(id);
+    return await assignedCustomersDAO.removeById(id);
+  };
+
+  const suspendCooperation = async (id) => {
+    return await assignedCustomersDAO.suspendCooperation(id);
   };
 
   return {
@@ -36,6 +40,7 @@ const create = (context) => {
     getByTrainerId,
     getByUserId,
     removeById,
+    suspendCooperation,
   };
 };
 
