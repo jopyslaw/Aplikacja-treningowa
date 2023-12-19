@@ -11,25 +11,7 @@ const userRole = {
   trainer: "trainer",
 };
 
-const trainerType = {
-  functional: "functional",
-  reducing: "reducing",
-  strengthening: "strengthening",
-  generalDevelopment: "generalDevelopment",
-  forWomenDuringAndAfterPregnancy: "forWomenDuringAndAfterPregnancy",
-  relaxingTheSenses: "relaxingTheSenses",
-};
-
 const userRoles = [userRole.admin, userRole.user, userRole.trainer];
-
-const trainerTypes = [
-  trainerType.functional,
-  trainerType.reducing,
-  trainerType.strengthening,
-  trainerType.generalDevelopment,
-  trainerType.forWomenDuringAndAfterPregnancy,
-  trainerType.relaxingTheSenses,
-];
 
 const userSchema = new mongoose.Schema(
   {
@@ -74,7 +56,7 @@ const createNewOrUpdate = (user) => {
       }
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       if ("ValidationError" === error.name) {
         error = error.errors[Object.keys(error.errors)[0]];
         throw applicationException.new(
@@ -114,11 +96,22 @@ const removeById = async (id) => {
   return await UserModel.findByIdAndRemove(id);
 };
 
+const getAllTrainersWithTrainerTypeId = async (trainerTypeId) => {
+  const result = await UserModel.find(
+    { trainerType: trainerTypeId, role: userRole.trainer },
+    {},
+    { lean: "toObject" }
+  );
+
+  return result;
+};
+
 export default {
   createNewOrUpdate: createNewOrUpdate,
   getByEmailOrName: getByEmailOrName,
   get: get,
   removeById: removeById,
+  getAllTrainersWithTrainerTypeId,
 
   userRole: userRole,
   model: UserModel,

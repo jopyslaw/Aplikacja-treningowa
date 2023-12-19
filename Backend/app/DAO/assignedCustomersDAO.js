@@ -19,9 +19,8 @@ const assignedCustomersSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
-    startDate: { type: String, required: true },
-    endDate: { type: String, required: true },
     isActive: { type: Boolean, required: true, default: true },
+    archived: { type: Boolean, required: true, default: false },
   },
   {
     collection: "assignedCustomers",
@@ -89,7 +88,11 @@ const getByUserId = async (id) => {
 };
 
 const removeById = async (id) => {
-  return await AssignedCustomersModel.findByIdAndRemove(id);
+  return await AssignedCustomersModel.findByIdAndUpdate(id, { archived: true });
+};
+
+const suspendCooperation = async (id) => {
+  return await AssignedCustomersModel.findByIdAndUpdate(id, { archived: true });
 };
 
 export default {
@@ -97,6 +100,7 @@ export default {
   getByUserId,
   getByTrainerId,
   removeById: removeById,
+  suspendCooperation,
 
   model: AssignedCustomersModel,
 };

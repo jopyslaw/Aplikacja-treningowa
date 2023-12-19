@@ -97,12 +97,30 @@ const removeById = async (id) => {
   return await TrainerTypeModel.findByIdAndRemove(id);
 };
 
+const getTrainerTypeByName = async (trainerType) => {
+  const result = await TrainerTypeModel.findOne(
+    { trainerType: trainerType },
+    {},
+    { lean: "toObject" }
+  );
+
+  if (result) {
+    return result;
+  }
+
+  throw applicationException.new(
+    applicationException.NOT_FOUND,
+    "Trainer type with provided name not exists"
+  );
+};
+
 export default {
   createNewOrUpdate: createNewOrUpdate,
   getByTrainerTypeId,
   removeById: removeById,
   createTrainerTypeArray,
   getAllTrainerTypes,
+  getTrainerTypeByName,
 
   model: TrainerTypeModel,
   trainerType,
