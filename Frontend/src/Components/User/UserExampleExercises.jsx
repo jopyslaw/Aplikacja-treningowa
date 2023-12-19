@@ -1,7 +1,8 @@
 import React from "react";
+import { jwtDecode } from "jwt-decode";
 
 function UserExampleExercises() {
-  const role = "user";
+  const role = jwtDecode(localStorage.getItem("token")).role;
   return (
     <>
       <div className="mt-10">

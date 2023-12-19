@@ -29,24 +29,30 @@ function Step4(props) {
                 <button
                   onClick={() => setData({ ...data, job: "sit" })}
                   className={`${
-                    data.job === "sit" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.job === "sit"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  } `}
                 >
                   Siedząca
                 </button>
                 <button
                   onClick={() => setData({ ...data, job: "physics" })}
                   className={`${
-                    data.job === "physics" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.job === "physics"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Fizyczna
                 </button>
                 <button
                   onClick={() => setData({ ...data, job: "mix" })}
                   className={`${
-                    data.job === "mix" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.job === "mix"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Mieszana
                 </button>
@@ -56,32 +62,40 @@ function Step4(props) {
                 <button
                   onClick={() => setData({ ...data, activity: "no" })}
                   className={`${
-                    data.activity === "no" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.activity === "no"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Brak
                 </button>
                 <button
                   onClick={() => setData({ ...data, activity: "low" })}
                   className={`${
-                    data.activity === "low" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.activity === "low"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Niska
                 </button>
                 <button
                   onClick={() => setData({ ...data, activity: "mid" })}
                   className={`${
-                    data.activity === "mid" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.activity === "mid"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Średnia
                 </button>
                 <button
                   onClick={() => setData({ ...data, activity: "high" })}
                   className={`${
-                    data.activity === "high" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.activity === "high"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  } `}
                 >
                   Wysoka
                 </button>
@@ -91,26 +105,62 @@ function Step4(props) {
                 <button
                   onClick={() => setData({ ...data, goal: "lose" })}
                   className={`${
-                    data.goal === "lose" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.goal === "lose"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Schudnąć
                 </button>
                 <button
                   onClick={() => setData({ ...data, goal: "stability" })}
                   className={`${
-                    data.goal === "stability" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.goal === "stability"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  }`}
                 >
                   Utrzymać wagę
                 </button>
                 <button
                   onClick={() => setData({ ...data, goal: "put" })}
                   className={`${
-                    data.goal === "put" && "bg-black text-white"
-                  } px-5 bg-white rounded-full`}
+                    data.goal === "put"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  } `}
                 >
                   Przytyć
+                </button>
+                <button
+                  onClick={() => setData({ ...data, goal: "injury" })}
+                  className={`${
+                    data.goal === "injury"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  } `}
+                >
+                  Powrót po kontuzji
+                </button>
+                <button
+                  onClick={() => setData({ ...data, goal: "moveForPregnancy" })}
+                  className={`${
+                    data.goal === "moveForPregnancy"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  } `}
+                >
+                  Ruch dla kobiet w trakcie ciąży lub po
+                </button>
+                <button
+                  onClick={() => setData({ ...data, goal: "relax" })}
+                  className={`${
+                    data.goal === "relax"
+                      ? "rounded-full px-5 bg-black text-white"
+                      : "rounded-full px-5 bg-white text-black"
+                  } `}
+                >
+                  Relaksujący
                 </button>
               </div>
             </div>

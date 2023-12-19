@@ -34,7 +34,10 @@ function Navbar() {
             )}
             {localStorage.getItem("token") ? (
               <div className="flex justify-center items-center">
-                <div className="bg-user bg-cover bg-no-repeat w-[30px] h-[30px]" />
+                <NavLink
+                  to="/user-panel"
+                  className="bg-user bg-cover bg-no-repeat w-[30px] h-[30px]"
+                />
               </div>
             ) : (
               <NavLink
