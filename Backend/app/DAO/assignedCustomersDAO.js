@@ -35,7 +35,7 @@ const AssignedCustomersModel = mongoose.model(
 const createNewOrUpdate = (assignedCustomer) => {
   return Promise.resolve()
     .then(() => {
-      if (!user.id) {
+      if (!assignedCustomer.id) {
         return new AssignedCustomersModel(assignedCustomer)
           .save()
           .then((result) => {
@@ -45,8 +45,8 @@ const createNewOrUpdate = (assignedCustomer) => {
           });
       } else {
         return AssignedCustomersModel.findByIdAndUpdate(
-          user.id,
-          _.omit(user, "id"),
+          assignedCustomer.id,
+          _.omit(assignedCustomer, "id"),
           {
             new: true,
           }
