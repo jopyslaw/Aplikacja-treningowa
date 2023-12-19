@@ -8,6 +8,7 @@ import TrainCalculator from "./Components/TrainCalculator/TrainCalculator";
 import Login from "./Components/User/Login";
 import Register from "./Components/User/Register";
 import Contact from "./Components/Contact";
+import UserPanel from "./Components/User/UserPanel";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
@@ -17,6 +18,7 @@ root.render(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/user-panel" element={<UserPanel />} />
     </Routes>
   </BrowserRouter>,
 );
