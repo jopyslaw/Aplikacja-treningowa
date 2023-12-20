@@ -75,12 +75,21 @@ const removeById = async (id) => {
   return await ExerciseModel.findByIdAndRemove(id);
 };
 
+const getExercisesByIds = async (ids) => {
+  return await ExerciseModel.find(
+    { _id: { $in: ids } },
+    {},
+    { lean: "toObject" }
+  );
+};
+
 export default {
   createNewOrUpdate: createNewOrUpdate,
   getByExerciseId,
   removeById: removeById,
   creatExcersiseFromArray,
   getAllExercises,
+  getExercisesByIds,
 
   model: ExerciseModel,
 };

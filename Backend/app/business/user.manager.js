@@ -1,3 +1,4 @@
+import exerciseDAO from "../DAO/exerciseDAO";
 import PasswordDAO from "../DAO/passwordDAO";
 import TokenDAO from "../DAO/tokenDAO";
 import trainerTypeDAO from "../DAO/trainerTypeDAO";
@@ -98,6 +99,25 @@ const create = (context) => {
         const tranning = trainingDAO.getTrainingsByTrainerTypeId(
           trainer.trainerType
         );
+
+        const exercises = await Promise.all(
+          tranning.map(async (traning) => {
+            const exercise = await exerciseDAO.getExercisesByIds(
+              traning.excercises
+            );
+            return {
+              trainerTypeId: tranning.trainerTypeId,
+              title: tranning.title,
+              description: tranning.description,
+              sex: tranning.sex,
+              traningGoal: tranning.trainingGoal,
+              physcialActivity: tranning.physcialActivity,
+              workType: tranning.workType,
+              exercise,
+            };
+          })
+        );
+
         return {
           email: trainer.email,
           name: trainer.name,
@@ -107,7 +127,7 @@ const create = (context) => {
           trainerType: trainer.trainerType,
           active: trainer.active,
           isAdmin: trainer.isAdmin,
-          tranning,
+          exercises,
         };
       })
     );

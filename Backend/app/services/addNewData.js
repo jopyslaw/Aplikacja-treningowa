@@ -29,7 +29,7 @@ export const addData = async () => {
     trainerTypeId: trainerTypes.find(
       (trainer) => trainer.trainerType === trainerTypeDAO.trainerType.reducing
     )._id,
-    exercises: [exercises[0]._id, exercises[1]._id, exercises[2]._id],
+    excercises: [exercises[0]._id, exercises[1]._id, exercises[2]._id],
   }));
 
   const trainings = await businessContainer
