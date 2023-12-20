@@ -99,7 +99,14 @@ const create = (context) => {
           trainer.trainerType
         );
         return {
-          ...trainer,
+          email: trainer.email,
+          name: trainer.name,
+          surname: trainer.surname,
+          login: trainer.login,
+          role: trainer.role,
+          trainerType: trainer.trainerType,
+          active: trainer.active,
+          isAdmin: trainer.isAdmin,
           tranning,
         };
       })
