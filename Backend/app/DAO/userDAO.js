@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "trainerType",
       required: false,
+      default: null,
     },
     active: { type: Boolean, default: true, required: false },
     isAdmin: { type: Boolean, default: true, required: false },
