@@ -33,7 +33,7 @@ const TokenModel = mongoose.model("token", tokenSchema);
 const create = async (user) => {
   const trainerType = user.trainerType
     ? await trainerTypeDAO.getByTrainerTypeId(user.trainerType)
-    : null;
+    : "";
 
   const access = "auth";
   const userData = {
