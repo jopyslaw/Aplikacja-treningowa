@@ -112,6 +112,16 @@ const getByTrainingId = async (id) => {
   );
 };
 
+const getTrainingsByTrainerTypeId = async (id) => {
+  const result = await TrainingModel.find(
+    { trainerTypeId: id },
+    {},
+    { lean: "toObject" }
+  );
+
+  return result;
+};
+
 const removeById = async (id) => {
   return await TrainingModel.findByIdAndRemove(id);
 };
@@ -122,6 +132,7 @@ export default {
   removeById: removeById,
   createTraningFromArray,
   getAllTrainings,
+  getTrainingsByTrainerTypeId,
 
   model: TrainingModel,
 

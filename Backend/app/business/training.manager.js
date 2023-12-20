@@ -35,12 +35,19 @@ const create = (context) => {
     }
   };
 
+  const getTrainingsByTrainerTypeId = async (id) => {
+    const result = await trainingDAO.getTrainingsByTrainerTypeId(id);
+
+    return result;
+  };
+
   return {
     createNewOrUpdate: createNewOrUpdate,
     getByTrainingId,
     removeById,
     createTrainigFromArray,
     getAllTrainings,
+    getTrainingsByTrainerTypeId,
   };
 };
 

@@ -1,6 +1,7 @@
 import PasswordDAO from "../DAO/passwordDAO";
 import TokenDAO from "../DAO/tokenDAO";
 import trainerTypeDAO from "../DAO/trainerTypeDAO";
+import trainingDAO from "../DAO/trainingDAO";
 import userDAO from "../DAO/userDAO";
 import UserDAO from "../DAO/userDAO";
 import applicationException from "../service/applicationException";
@@ -92,7 +93,19 @@ const create = (context) => {
       trainerTypeId._id
     );
 
-    return trainers;
+    const trainings = await Promise.all(
+      trainers.map(async (trainer) => {
+        const tranning = trainingDAO.getTrainingsByTrainerTypeId(
+          trainer.trainerType
+        );
+        return {
+          ...trainer,
+          tranning,
+        };
+      })
+    );
+
+    return trainings;
   };
 
   return {
