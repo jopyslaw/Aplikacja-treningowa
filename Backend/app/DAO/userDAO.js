@@ -71,7 +71,7 @@ const createNewOrUpdate = (user) => {
 
 const getByEmailOrName = async (name) => {
   const result = await UserModel.findOne({
-    $or: [{ email: name }, { name: name }],
+    $or: [{ email: name }, { login: name }],
   });
   if (result) {
     return mongoConverter(result);
