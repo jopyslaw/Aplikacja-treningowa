@@ -3,24 +3,33 @@ import * as _ from "lodash";
 import Promise from "bluebird";
 import applicationException from "../service/applicationException";
 import mongoConverter from "../service/mongoConverter";
-import uniqueValidator from "mongoose-unique-validator";
+import e from "express";
 
 const userRole = {
   admin: "admin",
   user: "user",
+  trainer: "trainer",
 };
 
-const userRoles = [userRole.admin, userRole.user];
+const userRoles = [userRole.admin, userRole.user, userRole.trainer];
 
 const userSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
+    login: { type: String, required: true, unique: true },
     role: {
       type: String,
       enum: userRoles,
-      default: userRole.admin,
+      default: userRole.user,
       required: false,
+    },
+    trainerType: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "trainerType",
+      required: false,
+      default: null,
     },
     active: { type: Boolean, default: true, required: false },
     isAdmin: { type: Boolean, default: true, required: false },
@@ -29,8 +38,6 @@ const userSchema = new mongoose.Schema(
     collection: "user",
   }
 );
-
-userSchema.plugin(uniqueValidator);
 
 const UserModel = mongoose.model("user", userSchema);
 
@@ -63,7 +70,7 @@ const createNewOrUpdate = (user) => {
 
 const getByEmailOrName = async (name) => {
   const result = await UserModel.findOne({
-    $or: [{ email: name }, { name: name }],
+    $or: [{ email: name }, { login: name }],
   });
   if (result) {
     return mongoConverter(result);
@@ -89,11 +96,22 @@ const removeById = async (id) => {
   return await UserModel.findByIdAndRemove(id);
 };
 
+const getAllTrainersWithTrainerTypeId = async (trainerTypeId) => {
+  const result = await UserModel.find(
+    { trainerType: trainerTypeId, role: userRole.trainer },
+    {},
+    { lean: "toObject" }
+  );
+
+  return result;
+};
+
 export default {
   createNewOrUpdate: createNewOrUpdate,
   getByEmailOrName: getByEmailOrName,
   get: get,
   removeById: removeById,
+  getAllTrainersWithTrainerTypeId,
 
   userRole: userRole,
   model: UserModel,

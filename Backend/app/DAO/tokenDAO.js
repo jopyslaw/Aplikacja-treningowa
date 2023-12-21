@@ -4,6 +4,7 @@ import momentWrapper from "../service/momentWrapper";
 import jwt from "jsonwebtoken";
 import mongoConverter from "../service/mongoConverter";
 import applicationException from "../service/applicationException";
+import trainerTypeDAO from "./trainerTypeDAO";
 
 const tokenTypeEnum = {
   authorization: "authorization",
@@ -30,12 +31,20 @@ const tokenSchema = new mongoose.Schema(
 const TokenModel = mongoose.model("token", tokenSchema);
 
 const create = async (user) => {
+  const trainerType = user.trainerType
+    ? await trainerTypeDAO.getByTrainerTypeId(user.trainerType)
+    : "";
+
   const access = "auth";
   const userData = {
     userId: user.id,
-    name: user.email,
+    name: user.name,
+    email: user.email,
     role: user.role,
     isAdmin: user.isAdmin,
+    trainerType: trainerType.trainerType,
+    login: user.login,
+    surname: user.surname,
     access: access,
   };
   const value = jwt.sign(userData, config.JwtSecret, {

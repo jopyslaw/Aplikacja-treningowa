@@ -1,5 +1,9 @@
+import exerciseDAO from "../DAO/exerciseDAO";
 import PasswordDAO from "../DAO/passwordDAO";
 import TokenDAO from "../DAO/tokenDAO";
+import trainerTypeDAO from "../DAO/trainerTypeDAO";
+import trainingDAO from "../DAO/trainingDAO";
+import userDAO from "../DAO/userDAO";
 import UserDAO from "../DAO/userDAO";
 import applicationException from "../service/applicationException";
 import sha1 from "sha1";
@@ -44,10 +48,101 @@ const create = (context) => {
     return await TokenDAO.remove(userId);
   };
 
+  const removeById = async (userId) => {
+    return await UserDAO.removeById(userId);
+  };
+
+  const getTrainersByTrainerType = async (trainerType) => {
+    const trainerTypes = [
+      { name: "lose", trainerTypeName: trainerTypeDAO.trainerType.reducing },
+      {
+        name: "injury",
+        trainerTypeName: trainerTypeDAO.trainerType.functional,
+      },
+      {
+        name: "put",
+        trainerTypeName: trainerTypeDAO.trainerType.strengthening,
+      },
+      {
+        name: "stability",
+        trainerTypeName: trainerTypeDAO.trainerType.generalDevelopment,
+      },
+      {
+        name: "relax",
+        trainerTypeName: trainerTypeDAO.trainerType.relaxingTheSenses,
+      },
+      {
+        name: "moveForPregnancy",
+        trainerTypeName:
+          trainerTypeDAO.trainerType.forWomenDuringAndAfterPregnancy,
+      },
+    ];
+
+    const selectedTrainerType = trainerTypes.find(
+      (trainerTypeObject) => trainerTypeObject.name === trainerType
+    );
+
+    if (!selectedTrainerType) {
+      return;
+    }
+
+    const trainerTypeId = await trainerTypeDAO.getTrainerTypeByName(
+      selectedTrainerType.trainerTypeName
+    );
+
+    const trainers = await userDAO.getAllTrainersWithTrainerTypeId(
+      trainerTypeId._id
+    );
+
+    const trainings = await Promise.all(
+      trainers.map(async (trainer) => {
+        const tranings = await trainingDAO.getTrainingsByTrainerTypeId(
+          trainer.trainerType
+        );
+
+        const exercises = await Promise.all(
+          tranings.map(async (traning) => {
+            const exercise = await exerciseDAO.getExercisesByIds(
+              traning.excercises
+            );
+
+            return {
+              trainerTypeId: traning.trainerTypeId,
+              title: traning.title,
+              description: traning.description,
+              sex: traning.sex,
+              traningGoal: traning.trainingGoal,
+              physcialActivity: traning.physcialActivity,
+              workType: traning.workType,
+              exercise,
+            };
+          })
+        );
+
+        return {
+          _id: trainer._id,
+          email: trainer.email,
+          name: trainer.name,
+          surname: trainer.surname,
+          login: trainer.login,
+          role: trainer.role,
+          trainerType: trainer.trainerType,
+          active: trainer.active,
+          isAdmin: trainer.isAdmin,
+          trainings: exercises,
+        };
+      })
+    );
+
+    return trainings;
+  };
+
   return {
     authenticate: authenticate,
     createNewOrUpdate: createNewOrUpdate,
     removeHashSession: removeHashSession,
+    removeById,
+    getTrainersByTrainerType,
   };
 };
 
