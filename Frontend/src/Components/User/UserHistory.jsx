@@ -7,19 +7,27 @@ function UserHistory() {
   const userId = jwtDecode(localStorage.getItem("token")).userId;
   const role = jwtDecode(localStorage.getItem("token")).role;
 
-  useEffect(() => {
-    console.log(history);
-  }, [history]);
+  const getStatus = (active) => {
+    if (active === true) {
+      return "Aktywny";
+    }
+    if (active === false) {
+      return "Zakończony";
+    }
+  };
 
   useEffect(() => {
+    const url =
+      role === "user"
+        ? `http://localhost:4200/api/assignedCustomers/trainers/${userId}`
+        : `http://localhost:4200/api/assignedCustomers/users/${userId}`;
     axios
-      .get(`http://localhost:4200/api/assignedCustomers/users/${userId}`, {
+      .get(url, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
-        console.log("Odpowiedź serwera:", response.data);
         setHistory(response.data);
       })
       .catch((error) => {
@@ -34,10 +42,25 @@ function UserHistory() {
           Twoja historia zgłoszeń jako{" "}
           {role === "trainer" ? "trener" : "podopieczny"}
         </p>
-        <div className="w-3/4 flex flex-col">
+        <div className="w-full flex flex-col">
           {history.map((value, index) => (
-            <div key={index}>
-              <p>{value.name}</p>
+            <div key={index} className="bg-white rounded-full px-10">
+              <div className="w-full flex justify-between">
+                <p className="font-bold">Status zgłoszenia</p>
+                <p>{getStatus(value.active)}</p>
+              </div>
+              <div className="w-full flex justify-between">
+                <p className="font-bold">Imię</p>
+                <p>{value.name}</p>
+              </div>
+              <div className="w-full flex justify-between">
+                <p className="font-bold">Nazwisko</p>
+                <p>{value.surname}</p>
+              </div>
+              <div className="w-full flex justify-between">
+                <p className="font-bold">Email</p>
+                <p>{value.email}</p>
+              </div>
             </div>
           ))}
         </div>

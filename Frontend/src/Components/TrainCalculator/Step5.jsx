@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 function Step5(props) {
-  useEffect(() => {
-    console.log(props.data);
-  }, [props.data]);
   const updateStep = (currentStep) => {
     props.onUpdate(currentStep);
   };
