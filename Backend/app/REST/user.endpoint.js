@@ -58,7 +58,7 @@ const userEndpoint = (router) => {
 
   router.get(
     "/api/user/get-trainers-by-trainer-type",
-    auth,
+    //auth,
     async (request, response, next) => {
       try {
         const result = await businessContainer
