@@ -11,9 +11,6 @@ function Step4(props) {
     props.onUpdate(currentStep);
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <>
       <div className="mt-[80px] justify-center flex w-full">

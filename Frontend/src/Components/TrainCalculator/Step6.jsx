@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 function Step6(props) {
+  const nav = useNavigate();
   const [data, setData] = useState([]);
   const userId = jwtDecode(localStorage.getItem("token")).userId;
   useEffect(() => {
@@ -14,17 +16,12 @@ function Step6(props) {
         },
       })
       .then((response) => {
-        console.log("Odpowiedź serwera:", response.data);
         setData(response.data);
       })
       .catch((error) => {
         console.error("Błąd podczas wysyłania danych:", error);
       });
   }, []);
-
-  useEffect(() => {
-    console.log(userId);
-  }, [userId]);
 
   const chooseTrainer = (_id) => {
     axios
@@ -41,17 +38,13 @@ function Step6(props) {
         },
       )
       .then((response) => {
-        console.log("Masno");
+        nav("/");
       })
       .catch((error) => {
         console.error("Błąd podczas wysyłania danych:", error);
       });
   };
 
-  useEffect(() => {
-    console.log(props.data);
-    console.log(data);
-  }, [props.data, data]);
   return (
     <>
       <div className="mt-[80px] justify-center flex w-full">
@@ -63,9 +56,12 @@ function Step6(props) {
             <p className="font-bold text-[30px]">
               O to lista trenerów dopasowanych do twoich preferencji
             </p>
-            <div className="mt-5 flex flex-row flex-wrap justify-center pb-10 w-full">
+            <div className="mt-5 flex gap-x-5 flex-row flex-wrap justify-center pb-10 w-full">
               {data.map((value, index) => (
-                <div className="w-1/2 px-5 bg-white rounded-lg" key={index}>
+                <div
+                  className="w-[500px] px-5 flex flex-col bg-white rounded-lg"
+                  key={index}
+                >
                   <div className="flex flex-row w-full justify-between">
                     <p>Email</p>
                     <p>{value.email}</p>
@@ -78,9 +74,34 @@ function Step6(props) {
                     <p>Nazwisko</p>
                     <p>{value.surname}</p>
                   </div>
+                  <div className="mt-5 w-full flex flex-col justify-center">
+                    <p className="text-center">Przykładowe treningi</p>
+                    <div className="w-full flex flex-col gap-y-5">
+                      {value.trainings.map((value1, index1) => (
+                        <div key={index1}>
+                          <p>Numer treningu: {index1 + 1}</p>
+                          <p>{value1.description}</p>
+                          <p>
+                            Dla kogo:{" "}
+                            {value1.sex === "Women" ? "Kobiety" : "Mężczyzny"}
+                          </p>
+                          <p className="font-bold">
+                            Tytuł treningu: {value1.title}
+                          </p>
+                          {value1.exercise.map((value2, index) => (
+                            <div key={index}>
+                              <p>{value2.description}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   <button
-                    className="w-full"
-                    onClick={() => chooseTrainer(value._id)}
+                    className="mt-2 mb-5 bg-blue-300 px-5 rounded-full "
+                    onClick={() => {
+                      chooseTrainer(value._id);
+                    }}
                   >
                     Wybierz trenera
                   </button>

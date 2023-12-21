@@ -21,10 +21,6 @@ function TrainCalculator() {
     job: "",
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const BMI = useMemo(() => {
     const height = parseInt(formData.height);
     const weight = parseInt(formData.weight);
@@ -68,7 +64,7 @@ function TrainCalculator() {
   );
   return (
     <>
-      <div className="bg-gradient-to-b w-full flex-col flex from-indigo-500 to-purple-400 ...">
+      <div className="relative bg-gradient-to-b w-full flex-col flex from-indigo-500 to-purple-400 ...">
         <Navbar />
         <div className="relative">
           {currentStep === 0 && (

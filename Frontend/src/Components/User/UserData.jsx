@@ -6,6 +6,8 @@ function UserData() {
   const trainerType = jwtDecode(localStorage.getItem("token")).trainerType;
   const name = jwtDecode(localStorage.getItem("token")).name;
   const email = jwtDecode(localStorage.getItem("token")).email;
+  const surname = jwtDecode(localStorage.getItem("token")).surname;
+  const login = jwtDecode(localStorage.getItem("token")).login;
   const getTrainerType = () => {
     if (trainerType === "functional") {
       return "Funkcjonalny";
@@ -28,10 +30,6 @@ function UserData() {
     return "";
   };
 
-  useEffect(() => {
-    console.log(trainerType);
-  }, [trainerType]);
-
   return (
     <>
       <div className="mt-10">
@@ -53,11 +51,11 @@ function UserData() {
           </div>
           <div className="flex-row flex justify-between">
             <p className="font-bold">Nazwisko</p>
-            <p className="font-bold text-white">Maćkowy</p>
+            <p className="font-bold text-white">{surname}</p>
           </div>
           <div className="flex-row flex justify-between">
             <p className="font-bold">Login</p>
-            <p className="font-bold text-white">maciekpl</p>
+            <p className="font-bold text-white">{login}</p>
           </div>
           <div className="flex-row flex justify-between">
             <p className="font-bold">Email</p>

@@ -11,7 +11,7 @@ function Register() {
     surname: "",
     login: "",
     password: "",
-    role: "",
+    role: "user",
     trainerType: "",
   });
   const [trainerType, setTrainerType] = useState([]);
@@ -23,16 +23,14 @@ function Register() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(trainerType, "trainer-type");
-    console.log(formData, "form-data");
-  }, [formData]);
-
   const handleSubmnit = () => {
     axios
-      .post("http://localhost:4200/api/user/create", formData)
+      .post("http://localhost:4200/api/user/create", {
+        ...formData,
+        trainerType: formData.role === "trainer" ? formData.trainerType : null,
+      })
       .then((response) => {
-        console.log("Odpowiedź serwera:", response.data);
+        nav("/");
       })
       .catch((error) => {
         console.error("Błąd podczas wysyłania danych:", error);
@@ -41,7 +39,7 @@ function Register() {
 
   return (
     <>
-      <div className="bg-gradient-to-b w-full flex-col flex from-indigo-500 to-purple-400">
+      <div className="relative bg-gradient-to-b w-full flex-col flex from-indigo-500 to-purple-400">
         <Navbar />
         <div className="my-[80px] justify-center flex w-full">
           <div className=" flex flex-col items-center w-3/4">

@@ -57,7 +57,6 @@ const createNewOrUpdate = (user) => {
       }
     })
     .catch((error) => {
-      console.log(error);
       if ("ValidationError" === error.name) {
         error = error.errors[Object.keys(error.errors)[0]];
         throw applicationException.new(

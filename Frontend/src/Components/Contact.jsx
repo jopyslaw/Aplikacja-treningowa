@@ -7,7 +7,7 @@ function Contact() {
     <>
       <div className="bg-gradient-to-b w-full flex-col flex from-indigo-500 to-purple-400 ...">
         <Navbar />
-        <div className="mt-[80px] justify-center flex w-full">
+        <div className="mt-[80px] h-[600px] justify-center flex w-full">
           <div className="flex flex-col items-center w-3/4">
             <p className="text-white font-bold text-[40px]">
               TrainForce - Kontakt
