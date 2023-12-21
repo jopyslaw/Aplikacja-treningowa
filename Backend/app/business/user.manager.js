@@ -96,23 +96,24 @@ const create = (context) => {
 
     const trainings = await Promise.all(
       trainers.map(async (trainer) => {
-        const tranning = trainingDAO.getTrainingsByTrainerTypeId(
+        const tranings = await trainingDAO.getTrainingsByTrainerTypeId(
           trainer.trainerType
         );
 
         const exercises = await Promise.all(
-          tranning.map(async (traning) => {
+          tranings.map(async (traning) => {
             const exercise = await exerciseDAO.getExercisesByIds(
               traning.excercises
             );
+
             return {
-              trainerTypeId: tranning.trainerTypeId,
-              title: tranning.title,
-              description: tranning.description,
-              sex: tranning.sex,
-              traningGoal: tranning.trainingGoal,
-              physcialActivity: tranning.physcialActivity,
-              workType: tranning.workType,
+              trainerTypeId: traning.trainerTypeId,
+              title: traning.title,
+              description: traning.description,
+              sex: traning.sex,
+              traningGoal: traning.trainingGoal,
+              physcialActivity: traning.physcialActivity,
+              workType: traning.workType,
               exercise,
             };
           })
@@ -127,7 +128,7 @@ const create = (context) => {
           trainerType: trainer.trainerType,
           active: trainer.active,
           isAdmin: trainer.isAdmin,
-          exercises,
+          trainings: exercises,
         };
       })
     );
