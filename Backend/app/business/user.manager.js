@@ -120,6 +120,7 @@ const create = (context) => {
         );
 
         return {
+          _id: trainer._id,
           email: trainer.email,
           name: trainer.name,
           surname: trainer.surname,
