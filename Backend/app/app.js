@@ -6,9 +6,40 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import routes from "./REST/routes";
 import { addData } from "./services/addNewData";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "REST API Docs",
+      version: "1.0.0",
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+  },
+  apis: ["./app/REST/*.endpoint.js"],
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
